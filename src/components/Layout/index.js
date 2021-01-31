@@ -1,33 +1,35 @@
 import s from './style.module.css';
 
-const Layout = ({ id, title, descr, urlBg, colorBg }) => {
-    const styleRoot = {
-        backgroundImage: urlBg ? `url(${urlBg})` : 'none',
-        backgroundColor: colorBg ? colorBg : '',
-    };
+const Layout = ({ id, title, urlBg, colorBg, colorTitle, children }) => {
+    const sectionStyle = {};
+
+    if (urlBg) {
+        sectionStyle.backgroundImage = `url(${urlBg})`;
+    }
+
+    if (colorBg) {
+        sectionStyle.backgroundColor = colorBg;
+    }
+
     return (
-        <section className={s.root} id={id} style={styleRoot}>
+        <section className={s.root} id={id} style={sectionStyle}>
             <div className={s.wrapper}>
                 <article>
                     {
                         title && (
-                            <div className={s.title}>
+                            <div className={s.title} style={{color: `${colorTitle}`}}>
                                 <h3>{title}</h3>
                                 <span className={s.separator}></span>
                             </div>
                         )
                     }
-                    {
-                        descr && (
-                            <div className={`${s.desc} ${s.full}`}>
-                                <p>{descr}</p>
-                            </div>
-                        )
-                    }
+                    <div className={`${s.desc} ${s.full}`}>
+                        {children}
+                    </div>
                 </article>
             </div>
         </section>
-    )
+    );
 }
 
 export default Layout;
